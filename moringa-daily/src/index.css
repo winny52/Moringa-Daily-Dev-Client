@@ -1,13 +1,70 @@
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.text-default-green{
+  color: #013A2F;
 }
+
+.text-default-gold{
+  color: #F1BB1B;
+}
+
+.bg-default-green{
+  background-color: #013A2F;
+}
+
+.bg-default-gold{
+  background-color: #F1BB1B;
+}
+
+.auth-screen{
+  height: calc(100vh - 56px);
+}
+
+
+.scrollbar-hide::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+.notification-badge{
+  top: -5px;
+  right: -10px;
+}
+
+/* Radio buttons */
+.categories input[type="radio"]:checked {
+  border-color: #F1BB1B;
+  /* Change border color to blue when checked */
+}
+
+.categories input[type="radio"]:checked::before {
+  content: "";
+  /* This is used to create the dot inside the radio button */
+  display: block;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: #F1BB1B;
+  /* Color of the dot when radio input is checked */
+  border-radius: 50%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.content-type input[type="radio"]:checked {
+  border-color: #F1BB1B;
+  /* Change border color to blue when checked */
+}
+
+.content-type input[type="radio"]:checked::before {
+    background-color: #F1BB1B;
+}
+/* Radio buttons */
