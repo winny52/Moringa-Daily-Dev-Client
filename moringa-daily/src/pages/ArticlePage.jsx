@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 const ArticlePage = () => {
@@ -23,6 +23,13 @@ const ArticlePage = () => {
     alert("Add comment button clicked!");
   };
 
+  // State to manage radio checklist
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleRadioChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">{articleData.title}</h1>
@@ -31,7 +38,21 @@ const ArticlePage = () => {
           <AccountCircleOutlinedIcon style={{ fontSize: "24px" }} />
           <h6 className="ml-2">{articleData.author}</h6>
         </div>
-        <div>{articleData.date}</div>
+        <div className="flex items-center mb-2">
+          <div>{articleData.date}</div>
+          <div className="ml-4">
+            <span className="text-lg pr-2">Rate this:</span>
+            <span role="img" aria-label="Star Rating" className="cursor-pointer">
+              ⭐️
+            </span>
+            <span role="img" aria-label="Star Rating" className="cursor-pointer">
+              ⭐️
+            </span>
+            <span role="img" aria-label="Star Rating" className="cursor-pointer">
+              ⭐️
+            </span>
+          </div>
+        </div>
       </div>
       <p className="text-gray-600">{articleData.content}</p>
       <button
@@ -57,6 +78,45 @@ const ArticlePage = () => {
         >
           Add Comment
         </button>
+      </div>
+      <div className="mt-8 p-4 border border-yellow-400 rounded">
+        <h2 className="text-lg font-semibold mb-2">Administrator Controls</h2>
+        <div>
+          <label>
+            <input
+              type="radio"
+              value="addToWishlist"
+              checked={selectedOption === "addToWishlist"}
+              onChange={handleRadioChange}
+              className="mr-2 text-yellow-500"
+            />
+            Add to Wishlist
+          </label>
+        </div>
+        <div>
+          <label>
+            <input
+              type="radio"
+              value="flag"
+              checked={selectedOption === "flag"}
+              onChange={handleRadioChange}
+              className="mr-2 text-yellow-500"
+            />
+            Flag
+          </label>
+        </div>
+        <div>
+          <label>
+            <input
+              type="radio"
+              value="remove"
+              checked={selectedOption === "remove"}
+              onChange={handleRadioChange}
+              className="mr-2 text-yellow-500"
+            />
+            Remove
+          </label>
+        </div>
       </div>
     </div>
   );
