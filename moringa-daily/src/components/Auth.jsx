@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 
 import { jwtDecode } from "jwt-decode";
-import { Navigate } from "react-router-dom";
 import HttpsIcon from "@mui/icons-material/Https";
 import MailLockOutlinedIcon from "@mui/icons-material/MailLockOutlined";
 
@@ -26,10 +26,6 @@ const Auth = () => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-
-    console.log(
-      `username:${username_change} password:${password_change} email: ${email_change}`
-    );
 
     fetch("http://127.0.0.1:5000/signup", {
       method: "POST",
@@ -158,7 +154,7 @@ const Auth = () => {
                 className="bg-default-gold text-default-green text-md rounded-full w-full md:w-4/5 py-1 mt-3"
                 onClick={handleSignIn}
               >
-                Sign In
+                <Link to="/">Sign In</Link>
               </button>
             </div>
             <p className="mt-3 text-center text-gray-400 text-md md:text-xs">

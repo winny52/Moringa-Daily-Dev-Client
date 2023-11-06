@@ -1,47 +1,46 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 /* Your custom CSS styles go here */
 
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
-.text-default-green{
-  color: #013A2F;
+.text-default-green {
+  color: #013a2f;
 }
 
-.text-default-gold{
-  color: #F1BB1B;
+.text-default-gold {
+  color: #f1bb1b;
 }
 
-.bg-default-green{
-  background-color: #013A2F;
+.bg-default-green {
+  background-color: #013a2f;
 }
 
-.bg-default-gold{
-  background-color: #F1BB1B;
+.bg-default-gold {
+  background-color: #f1bb1b;
 }
 
-.auth-screen{
+.auth-screen {
   height: calc(100vh - 56px);
 }
-
 
 .scrollbar-hide::-webkit-scrollbar {
   width: 0 !important;
 }
 
-.notification-badge{
+.notification-badge {
   top: -5px;
   right: -10px;
 }
 
 /* Radio buttons */
 .categories input[type="radio"]:checked {
-  border-color: #F1BB1B;
+  border-color: #f1bb1b;
   /* Change border color to blue when checked */
 }
 
@@ -51,7 +50,7 @@
   display: block;
   width: 0.75rem;
   height: 0.75rem;
-  background-color: #F1BB1B;
+  background-color: #f1bb1b;
   /* Color of the dot when radio input is checked */
   border-radius: 50%;
   position: relative;
@@ -61,11 +60,11 @@
 }
 
 .content-type input[type="radio"]:checked {
-  border-color: #F1BB1B;
+  border-color: #f1bb1b;
   /* Change border color to blue when checked */
 }
 
 .content-type input[type="radio"]:checked::before {
-    background-color: #F1BB1B;
+  background-color: #f1bb1b;
 }
 /* Radio buttons */
