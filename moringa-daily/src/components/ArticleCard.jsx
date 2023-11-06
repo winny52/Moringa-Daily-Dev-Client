@@ -3,6 +3,19 @@ import StarIcon from "@mui/icons-material/Star";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 const ArticleCard = ({ is_new_article, is_wishlist }) => {
+
+// function handleButtonClick (content_id,action){
+//   const API = 
+
+
+
+
+
+
+
+
+
+
   return (
     <div className='card  border'>
       <img
@@ -35,12 +48,16 @@ const ArticleCard = ({ is_new_article, is_wishlist }) => {
         {!is_wishlist && is_new_article ? (
           <div className='flex gap-4 justify-end'>
             <div className='flex gap-1 items-center text-default-green'>
-              <i className='fa fa-check-circle-o' aria-hidden='true'></i>
-              <h6 className='my-auto'>Approve</h6>
-            </div>
-            <div className='flex gap-2 items-center text-red-500 cursor-pointer'>
-              <i class='fa fa-trash-o' aria-hidden='true'></i>
-              <h6 className='my-auto'>Delete</h6>
+            <button>
+    <i className='fa fa-check-circle-o' aria-hidden='true'></i>
+    <h6 className='my-auto'>Approve</h6>
+  </button>
+</div>
+<div className='flex gap-2 items-center text-red-500 cursor-pointer'>
+  <button>
+    <i className='fa fa-trash-o' aria-hidden='true'></i>
+    <h6 className='my-auto'>Delete</h6>
+  </button>
             </div>
           </div>
         ) : (
