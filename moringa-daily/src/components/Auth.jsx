@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import PersonIcon from "@mui/icons-material/Person";
+
+import { jwtDecode } from "jwt-decode";
 import { Navigate } from "react-router-dom";
 import HttpsIcon from "@mui/icons-material/Https";
 import MailLockOutlinedIcon from "@mui/icons-material/MailLockOutlined";
@@ -57,7 +59,12 @@ const Auth = () => {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
-    }).then((data) => Navigate("/"));
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        let decoded = jwtDecode(data.access_token);
+        console.log(decoded.sub);
+      });
   };
 
   function handlePassword(event) {
@@ -135,6 +142,7 @@ const Auth = () => {
               <input
                 type="password"
                 placeholder="Password"
+                onChange={handlePassword}
                 className="w-3/5 black focus:outline-none text-sm"
               />
             </div>
