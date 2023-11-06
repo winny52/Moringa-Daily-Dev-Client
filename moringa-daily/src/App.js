@@ -12,6 +12,7 @@ function App() {
         <Route path='/'  exact element={<HomePage />} />
         <Route path='/articles/:id' element={<ArticlePage />} />
         <Route path='/dashboard' element={<Dashboard />} />
+        
       </Routes>
     </Router>
   );
