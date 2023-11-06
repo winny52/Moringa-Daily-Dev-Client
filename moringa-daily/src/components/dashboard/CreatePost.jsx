@@ -5,7 +5,7 @@ const CreatePost = () => {
   const [formData, setFormData] = useState({
     title: "",
     category: "A.I & Machine Learning",
-    content: "",
+    description: "",
     content_type: "Article",
     image: null,
     media_url: "", // Change 'linkURL' to 'media_url'
@@ -85,8 +85,8 @@ const CreatePost = () => {
                 Type the full article in the box below
               </p>
               <textarea
-                name="content"
-                value={formData.content}
+                name="description"
+                value={formData.description}
                 onChange={handleInputChange}
                 rows={8}
                 className="w-full py-1 border focus:outline-none rounded-lg px-2 text-gray-600"
@@ -144,8 +144,8 @@ const CreatePost = () => {
               <h6 className="text-default-gold py-2 text-md">Enter Link URL:</h6>
               <input
                 type="text"
-                name="linkURL"
-                value={formData.linkURL}
+                name="media_url"
+                value={formData.media_url}
                 onChange={handleInputChange}
                 className="w-full py-1 border focus:outline-none rounded-lg px-2 text-gray-600"
                 placeholder=" *For Audio and video files"

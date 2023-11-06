@@ -2,15 +2,22 @@ import React, { useState } from "react";
 
 const CreateCategory = () => {
   const [categoryName, setCategoryName] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
+    if (!categoryName) {
+      setErrorMessage("Category name cannot be empty.");
+      return;
+    }
+
     const newCategory = {
       name: categoryName,
     };
 
-    fetch("http://admin/create-category", {
+    fetch("/admin/create-category", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,14 +26,15 @@ const CreateCategory = () => {
     })
       .then((response) => {
         if (response.status === 201) {
-          console.log("Category added successfully");
-          
+          setSuccessMessage("Category added successfully");
+          setCategoryName("");
+          setErrorMessage("");
         } else {
-          console.error("Failed to add category");
+          setErrorMessage("Failed to add category");
         }
       })
       .catch((error) => {
-        console.error("Error:", error);
+        setErrorMessage("Error: " + error.message);
       });
   };
 
@@ -41,18 +49,20 @@ const CreateCategory = () => {
         <div className="grid grid-cols-1 md:grid-cols-5">
           <input
             type="text"
+            name="name"
             className="col-span-1 md:col-span-3 border focus:outline-none rounded-lg px-2 text-gray-600"
             value={categoryName}
-            onChange={(e) => setCategoryName(e.target.value)} 
+            onChange={(e) => setCategoryName(e.target.value)}
           />
           <button
-            
             className="col-span-1 md:col-span-2 bg-red-900 uppercase text-md text-white py-1 rounded mx-2"
           >
             Save New Category
           </button>
         </div>
       </form>
+      {successMessage && <div className="text-success">{successMessage}</div>}
+      {errorMessage && <div className="text-error">{errorMessage}</div>}
     </div>
   );
 };
