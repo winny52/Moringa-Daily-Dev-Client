@@ -20,7 +20,9 @@ const login = (ausername, apassword) => {
       password: apassword,
     })
     .then((response) => {
-      if (response.data.accessToken) {
+      console.log("almost");
+      if (response.data.accessToken != false) {
+        console.log("we used if");
         localStorage.setItem("user", JSON.stringify(response.data));
       }
 

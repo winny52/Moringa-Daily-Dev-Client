@@ -29,6 +29,8 @@ const Auth = () => {
 
   const dispatch = useDispatch();
 
+    let navigate = useNavigate();
+
   useEffect(() => {
     dispatch(clearMessage());
   }, [dispatch]);
@@ -90,6 +92,7 @@ const Auth = () => {
       dispatch(login(username_change + "-" + password_change))
         .then((res) => {
           console.log(res.payload.user.access_token);
+          navigate("/");
         })
         .catch(() => {
           setLoading(false);
@@ -185,14 +188,21 @@ const Auth = () => {
               </div>
               <h6 className="text-gray-400 text-xs">Forgot password?</h6>
             </div>
+                            <Link to="/">
+
             <div className="w-full flex justify-center">
               <button
                 className="bg-default-gold text-default-green text-md rounded-full w-full md:w-4/5 py-1 mt-3"
-                onClick={handleSignIn}
+                onClick={
+                  handleSignIn
+                }
               >
-                Sign In
+                          Sign In
+
               </button>
             </div>
+                                          </Link>
+
             <p className="mt-3 text-center text-gray-400 text-md md:text-xs">
               New here?{" "}
               <span
