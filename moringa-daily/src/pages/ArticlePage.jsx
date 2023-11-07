@@ -5,14 +5,7 @@ import ArticlesSection from "../components/ArticlesSection";
 import Footer from "../components/Footer";
 
 const ArticlePage = () => {
-  return (
-    <div>
-      <Header />
-      <Article />
-      <ArticlesSection section_color='bg-default-green' />
-      <Footer />
-    </div>
-  );
+  return <div>ArticlePage</div>;
 };
 
 export default ArticlePage;
