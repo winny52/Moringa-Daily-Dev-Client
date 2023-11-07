@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import PersonIcon from "@mui/icons-material/Person";
 
-import { jwtDecode } from "jwt-decode";
+import { clearMessage } from "../slices/messages";
+
+import { login, register } from "../slices/auth";
 import HttpsIcon from "@mui/icons-material/Https";
 import MailLockOutlinedIcon from "@mui/icons-material/MailLockOutlined";
 
@@ -10,10 +16,22 @@ const Auth = () => {
   const [showRegister, setShowRegister] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [password_change, setPassword_change] = useState();
   const [username_change, setUsername_change] = useState();
   const [email_change, setEmail_change] = useState();
+
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.message);
+
+  const [successful, setSuccessful] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearMessage());
+  }, [dispatch]);
 
   const toggleForm = () => {
     setShowRegister(!showRegister);
@@ -27,6 +45,26 @@ const Auth = () => {
   const handleSignUp = (e) => {
     e.preventDefault();
 
+    const initialValues = {
+      username: "",
+      email: "",
+      password: "",
+    };
+
+    setSuccessful(false);
+
+    dispatch(
+      register(username_change + "-" + password_change + "-" + email_change)
+    )
+      .unwrap()
+      .then(() => {
+        setSuccessful(true);
+      })
+      .catch(() => {
+        setSuccessful(false);
+      });
+
+    /*
     fetch("http://127.0.0.1:5000/signup", {
       method: "POST",
       body: JSON.stringify({
@@ -40,27 +78,25 @@ const Auth = () => {
         "Content-type": "application/json; charset=UTF-8",
       },
     });
+    */
   };
 
   const handleSignIn = (e) => {
     e.preventDefault();
 
-    fetch("http://127.0.0.1:5000/login", {
-      method: "POST",
-      body: JSON.stringify({
-        username: username_change,
-        password: password_change,
-      }),
+    setLoading(true);
 
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        let decoded = jwtDecode(data.access_token);
-        console.log(decoded.sub);
-      });
+    if (true) {
+      dispatch(login(username_change + "-" + password_change))
+        .then((res) => {
+          console.log(res.payload.user.access_token);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
   };
 
   function handlePassword(event) {
@@ -154,7 +190,7 @@ const Auth = () => {
                 className="bg-default-gold text-default-green text-md rounded-full w-full md:w-4/5 py-1 mt-3"
                 onClick={handleSignIn}
               >
-                <Link to="/">Sign In</Link>
+                Sign In
               </button>
             </div>
             <p className="mt-3 text-center text-gray-400 text-md md:text-xs">
