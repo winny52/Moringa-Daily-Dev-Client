@@ -5,7 +5,6 @@ const useAuth = () => {
   const user = { loggedIn: false };
 
   if (localStorage.getItem("user")) {
-    console.log("real");
     user.loggedIn = true;
     return user && user.loggedIn;
   }
