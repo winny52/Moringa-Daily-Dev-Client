@@ -14,9 +14,10 @@ import { jwtDecode } from "jwt-decode";
 
 const Dashboard = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  console.log(localStorage.getItem.user);
   let user = JSON.parse(localStorage.getItem("user"));
   user = jwtDecode(user.access_token).sub;
-  // console.log(jwtDecode(user.access_token));
+  // console.log(jwtDecode(user));
   
 
   return (
