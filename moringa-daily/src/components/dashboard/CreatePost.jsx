@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const CreatePost = () => {
-  // Define the initial form data using the useState hook
   const [formData, setFormData] = useState({
     title: "",
-    category: "A.I & Machine Learning",
+    category: "",
     description: "",
     content_type: "Article",
     image: null,
-    media_url: "", // Change 'linkURL' to 'media_url'
+    media_url: "",
   });
+
+  const [categories, setCategories] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -25,28 +26,41 @@ const CreatePost = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("/content", {
+      const response = await fetch("http://127.0.0.1:5000//content", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json', // Set the content type to JSON
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
 
       if (response.status === 201) {
         // Content posted successfully
-        alert('Content posted');
+        alert("Content posted");
       } else {
         // Content not posted
-        alert('Content not posted');
+        alert("Content not posted");
       }
     } catch (error) {
       // Handle any network or other errors
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
-
-
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000//categories") 
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setCategories(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
+  }, []);
   return (
     <form onSubmit={handleSubmit}>
       <div className="bg-white p-4 shadow-sm mx-2 mt-4">
@@ -67,18 +81,22 @@ const CreatePost = () => {
               />
             </div>
             <div className="mb-3">
+              <div>
+                <p className="text-gray-600 text-sm py-2">Choose story categories</p>
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  className="w-full py-1 border focus:outline-none rounded-lg px-2 text-gray-600"
+                >
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <p className="text-gray-600 text-sm py-2">Choose story categories</p>
-              <select
-                name="category"
-                value={formData.category}
-                onChange={handleInputChange}
-                className="w-full py-1 border focus:outline-none rounded-lg px-2 text-gray-600"
-              >
-                <option>A.I & Machine Learning</option>
-                <option>Internet of Things (IoT)</option>
-                <option>Cloud Computing</option>
-                <option>Theory of Computation</option>
-              </select>
             </div>
             <div className="mb-3">
               <p className="text-gray-600 text-sm py-2">
@@ -95,9 +113,7 @@ const CreatePost = () => {
           </div>
           <div className="col-span-1 md:col-span-2 mx-8">
             <div className="mb-3 content-type">
-              <h6 className="text-default-gold py-2 text-md">
-                Select Content Type
-              </h6>
+              <h6 className="text-default-gold py-2 text-md">Select Content Type</h6>
               <div className="flex gap-2 items-center ">
                 <input
                   type="radio"
@@ -130,9 +146,7 @@ const CreatePost = () => {
               </div>
             </div>
             <div className="mb-3">
-              <h6 className="text-default-gold py-2 text-md">
-                Upload Features Image
-              </h6>
+              <h6 className="text-default-gold py-2 text-md">Upload Features Image</h6>
               <input
                 type="file"
                 name="image"
@@ -151,7 +165,11 @@ const CreatePost = () => {
                 placeholder=" *For Audio and video files"
               />
             </div>
-            <button className="mt-3 w-full bg-red-900 uppercase text-md text-white py-1 rounded mx-2" type="submit" name="data">
+            <button
+              className="mt-3 w-full bg-red-900 uppercase text-md text-white py-1 rounded mx-2"
+              type="submit"
+              name="data"
+            >
               Publish Post
             </button>
           </div>

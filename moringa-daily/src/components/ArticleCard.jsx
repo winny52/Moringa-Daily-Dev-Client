@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
-const ArticleCard = ({ is_flagged_article, is_wishlist, onRemoveFromWishlist, onApprove, onDelete }) => {
+const ArticleCard = ({ is_flagged_article, is_wishlist,onApprove,onRemoveFromWishlist }) => {
+
+
+
+
+
+
+
+
   return (
     <div className="card border">
       <img src="/assets/images/image-2.jpeg" className="card-img-top" alt="..." />
@@ -28,18 +36,12 @@ const ArticleCard = ({ is_flagged_article, is_wishlist, onRemoveFromWishlist, on
         </h6>
         {is_flagged_article && (
           <div className="flex gap-4 justify-end">
-            <div className="flex gap-1 items-center text-default-green">
-              <button onClick={onApprove}>
-                <i className="fa fa-check-circle-o" aria-hidden="true"></i>
-                <h6 className="my-auto">Approve</h6>
-              </button>
-            </div>
-            <div className="flex gap-2 items-center text-red-500 cursor-pointer">
-              <button onClick={onDelete}>
-                <i className="fa fa-trash-o" aria-hidden="true"></i>
-                <h6 className="my-auto">Delete</h6>
-              del</button>
-            </div>
+          <button onClick={onApprove} className="text-red-400 uppercase my-auto text-sm cursor-pointer">
+              Aprrove
+            </button>
+            <button className="text-red-400 uppercase my-auto text-sm cursor-pointer">
+              Delete
+            </button>
           </div>
         )}
         {is_wishlist && (

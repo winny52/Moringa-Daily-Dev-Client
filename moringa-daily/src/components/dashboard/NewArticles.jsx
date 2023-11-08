@@ -10,13 +10,13 @@ const NewArticles = () => {
       </div>
       <div className='grid grid-cols-3 flex justify-center'>
         <div className='col-span-1 p-2'>
-          <ArticleCard is_new_article={true} />
+          <ArticleCard is_flagged_article={true} />
         </div>
         <div className='col-span-1 p-2'>
-          <ArticleCard is_new_article={true} />
+          <ArticleCard is_flagged_article={true} />
         </div>
         <div className='col-span-1 p-2'>
-          <ArticleCard is_new_article={true} />
+          <ArticleCard is_flagged_article={true} />
         </div>
       </div>
     </div>
