@@ -9,9 +9,10 @@ import CreatePost from "../components/dashboard/CreatePost";
 import NewArticles from "../components/dashboard/NewArticles";
 import WishList from "../components/dashboard/WishList";
 import Footer from "../components/dashboard/Footer";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   return (
     <div>
       <div className='flex h-screen overflow-hidden'>
@@ -19,7 +20,13 @@ const Dashboard = () => {
         <div className='flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
           <TopBar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
           <main>
-            <div className='px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto'>
+            <Link
+              to='/'
+              className='w-full h-12 flex d-md-none items-center justify-end text-default-green uppercase text-xl px-3'
+            >
+              <h6 className='text-end underline italic'>Home</h6>
+            </Link>
+            <div className='px-1 md:px-12 md:py-4 w-full max-w-9xl mx-auto'>
               <ProfileSection />
               <CategorySection />
               <UsersList />

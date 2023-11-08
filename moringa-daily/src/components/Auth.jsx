@@ -33,15 +33,15 @@ const Auth = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-      className='w-full auth-screen bg-slate-100 flex items-center justify-center'
+      className='w-full h-screen auth-screen bg-slate-100 flex items-center justify-center'
     >
-      <div className='md:w-3/5 rounded shadow grid grid-cols-1 md:grid-cols-4 transition-all duration-300 ease-in-out'>
-        <div className='col-span-1 md:col-span-2 bg-default-green py-4 px-8'>
+      <div className='h-screen md:h-auto md:w-3/5 rounded shadow grid grid-cols-1 md:grid-cols-4 transition-all duration-300 ease-in-out'>
+        <div className='col-span-1 md:col-span-2 bg-default-green py-3 md:py-4 px-8'>
           <p className='text-slate-300'>Welcome to</p>
-          <h2 className='w-32 font-semibold text-default-gold text-4xl mt-3'>
-            <span className='uppercase text-5xl'>Moringa</span> School
+          <h2 className='md:w-32 font-semibold text-default-gold text-2xl md:mt-3'>
+            <span className='uppercase md:text-3xl'>Moringa</span> School{" "}
+            <span className='text-white font-semibold md:text-2xl'>Daily</span>
           </h2>
-          <h4 className='text-white font-semibold text-2xl'>Daily</h4>
           <p className='text-gray-400 text-sm pt-2'>
             Your number one news resource for all things tech, powered and
             update by Moringa School team
@@ -52,7 +52,7 @@ const Auth = () => {
           >
             {showLogin ? " Sign Up" : showRegister && "Sign In"}
           </button>
-          <div className='flex justify-between items-center mt-5'>
+          <div className='flex justify-between items-center md:mt-5'>
             <div className='text-start'>
               <h4 className='text-slate-300'>
                 Contact <span className='text-default-gold'>Us</span>

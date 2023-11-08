@@ -4,10 +4,28 @@ import { Link } from "react-router-dom";
 const Sidebar = ({ isCollapsed }) => {
   return (
     <aside
-      className={`bg-default-green ${
+      className={`bg-default-green d-none d-md-block ${
         isCollapsed ? "w-16" : "w-48"
       } z-40 md:z-0 h-screen overflow-y-scroll scrollbar-hide left-0 top-14 transition-all duration-300 ease-in-out`}
     >
+      <div className='sticky top-0 bg-default-gold h-16 flex items-center px-3'>
+        <div className='h-20 flex items-center justify-center text-xl'>
+          {!isCollapsed && (
+            <h6 className='text-default-green font-semibold'>MSD Dashboard</h6>
+          )}
+          <div
+            className={`h-8 w-12
+                    ${
+                      isCollapsed ? "visible" : "invisible"
+                    } flex justify-center items-center cursor-pointer absolute right-3`}
+          >
+            <i
+              className='fa fa-bullhorn text-default-green text-3xl md:text-4xl'
+              aria-hidden='true'
+            ></i>
+          </div>
+        </div>
+      </div>
       <div className='flex flex-col items-center'>
         {isCollapsed ? (
           <i

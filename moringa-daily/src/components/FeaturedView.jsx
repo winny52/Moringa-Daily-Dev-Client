@@ -2,21 +2,25 @@ import React from "react";
 
 const FeaturedView = () => {
   return (
-    <div className='bg-default-green grid grid-cols-2'>
+    <div className='bg-default-green grid grid-cols-1 md:grid-cols-2'>
       <div className='col-span-1'>
-        <img src='/assets/images/moringa-bg.jpeg' alt='featured article' />
+        <img
+          src='/assets/images/moringa-bg.jpeg'
+          alt='featured article'
+          className='h-full object-cover'
+        />
       </div>
-      <div className='col-span-1 flex flex-col p-12 relative'>
+      <div className='col-span-1 flex flex-col p-4 md:p-12 relative'>
         <h6 className='text-default-gold text-xl uppercase italic'>
           Top Story
         </h6>
-        <h2 className='text-default-gold text-2xl py-3 font-semibold'>
+        <h2 className='text-default-gold text-xl md:text-2xl py-1 lg:py-3 font-semibold'>
           FT05 Students to Graduate
         </h2>
-        <h4 className='text-white uppercase text-3xl'>
+        <h4 className='text-white uppercase text-2xl lg:text-3xl'>
           Our Highest Ranking <br /> Class In So Far
         </h4>
-        <hr className='w-12 h-1 bg-default-gold rounded-full border-none mt-3' />
+        <hr className='w-12 h-1 bg-amber-400 rounded-full border-none mt-3' />
         <p className='text-gray-400 text-md py-3'>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum,
           fugiat. Sequi eveniet dignissimos suscipit praesentium nisi voluptate

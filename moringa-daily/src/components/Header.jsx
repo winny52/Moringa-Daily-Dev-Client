@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import StarIcon from "@mui/icons-material/Star";
 import HttpsIcon from "@mui/icons-material/Https";
-// import { BrowserRouter as Router } from 'react-router-dom';
 
 const Header = () => {
   const navigate = useNavigate();

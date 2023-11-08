@@ -71,14 +71,14 @@ const rows = [
     is_approved: true,
   },
   {
-    id: 1,
+    id: 2,
     username: "Yehezkiel",
     email: "Yehezkielbryan@gmail.com",
     is_writer: true,
     is_approved: false,
   },
   {
-    id: 2,
+    id: 3,
     username: "Yehezkiel",
     email: "Yehezkielbryan@gmail.com",
     is_approved: true,

@@ -4,7 +4,7 @@ import VideoCard from "./VideoCard";
 
 const VideoSlider = () => {
   return (
-    <div className='bg-default-green px-16 py-12'>
+    <div className='bg-default-green px-4 md:px-16 py-4 md:py-12'>
       <div className='flex gap-3 items-center'>
         <div className='w-12 h-12 rounded-full bg-default-gold flex justify-center items-center text-default-green'>
           <VideocamIcon style={{ fontSize: "28px" }} />

@@ -1,12 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createArticle } from "../../redux/actions/articleActions";
 
 const CreatePost = () => {
+  const dispatch = useDispatch();
+
+  const category = useSelector((state) => state.category);
+  const { categories } = category;
+
+  const article = useSelector((state) => state.article);
+  const { loading, success_create } = article;
+
+  const [articleInfo, setArticleInfo] = useState({
+    title: "",
+    description: "",
+    category_id: "",
+  });
+  const [mediaUrl, setMediaUrl] = useState("");
+
+  const handleChange = (e) => {
+    setArticleInfo({ ...articleInfo, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (articleInfo.title !== "" || articleInfo.description !== "") {
+      dispatch(
+        createArticle({
+          ...articleInfo,
+          category_id: Number(articleInfo.category_id),
+          user_id: 1,
+          media_url: mediaUrl,
+        })
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (success_create) {
+      setArticleInfo({ title: "", description: "", category_id: "" });
+    }
+  }, [success_create]);
+
+  console.log(articleInfo);
   return (
-    <div className='bg-white p-4 shadow-sm mx-2 mt-4'>
+    <div className='bg-white p-4 card mx-2 mt-4'>
       <div className='flex items-center gap-3 mt-3'>
         <div className='w-4 h-4 rounded-full bg-red-900 flex justify-center items-center'></div>
         <h6 className='text-red-900 my-auto text-xl'>Post Content</h6>
       </div>
+      {loading && <p>loading...</p>}
       <div className='grid grid-cols-1 md:grid-cols-5'>
         <div className='col-span-1 md:col-span-3'>
           <div className='mb-3'>
@@ -14,6 +57,9 @@ const CreatePost = () => {
             <input
               type='text'
               className='w-full py-1 border focus:outline-none rounded-lg px-2 text-gray-600'
+              name='title'
+              value={articleInfo.title}
+              onChange={handleChange}
             />
           </div>
           <div className='mb-3'>
@@ -23,11 +69,18 @@ const CreatePost = () => {
             <select
               type='text'
               className='w-full py-1 border focus:outline-none rounded-lg px-2 text-gray-600'
+              name='category_id'
+              value={articleInfo.category_id}
+              onChange={handleChange}
             >
-              <option>A.I & Machine Learning</option>
-              <option>Internet of Things (IoT)</option>
-              <option>Cloud Computing</option>
-              <option>Theory of Computation</option>
+              {categories?.map((category) => {
+                const { category_id, name } = category;
+                return (
+                  <option value={category_id} key={category_id}>
+                    {name}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className='mb-3'>
@@ -38,6 +91,9 @@ const CreatePost = () => {
               type='text'
               rows={8}
               className='w-full py-1 border focus:outline-none rounded-lg px-2 text-gray-600'
+              name='description'
+              value={articleInfo.description}
+              onChange={handleChange}
             ></textarea>
           </div>
         </div>
@@ -71,9 +127,14 @@ const CreatePost = () => {
               type='text'
               className='w-full py-1 border focus:outline-none rounded-lg px-2 text-gray-600'
               placeholder=' *For Audio and video files'
+              value={mediaUrl}
+              onChange={(e) => setMediaUrl(e.target.value)}
             />
           </div>
-          <button className='mt-3 w-full bg-red-900 uppercase text-md text-white py-1 rounded mx-2'>
+          <button
+            className='mt-3 w-full bg-red-900 uppercase text-md text-white py-1 rounded mx-2'
+            onClick={handleSubmit}
+          >
             Publish Post
           </button>
         </div>
