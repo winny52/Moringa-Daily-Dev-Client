@@ -1,6 +1,14 @@
-import React, { useState } from "react";
-import KeyIcon from "@mui/icons-material/Key";
+import React, { useState, useEffect } from "react";
+
+import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import PersonIcon from "@mui/icons-material/Person";
+
+import { clearMessage } from "../slices/messages";
+
+import { login, register } from "../slices/auth";
 import HttpsIcon from "@mui/icons-material/Https";
 import MailLockOutlinedIcon from "@mui/icons-material/MailLockOutlined";
 
@@ -8,10 +16,24 @@ const Auth = () => {
   const [showRegister, setShowRegister] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [password_change, setPassword_change] = useState();
   const [username_change, setUsername_change] = useState();
   const [email_change, setEmail_change] = useState();
+
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.message);
+
+  const [successful, setSuccessful] = useState(false);
+
+  const dispatch = useDispatch();
+
+    let navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(clearMessage());
+  }, [dispatch]);
 
   const toggleForm = () => {
     setShowRegister(!showRegister);
@@ -25,6 +47,26 @@ const Auth = () => {
   const handleSignUp = (e) => {
     e.preventDefault();
 
+    const initialValues = {
+      username: "",
+      email: "",
+      password: "",
+    };
+
+    setSuccessful(false);
+
+    dispatch(
+      register(username_change + "-" + password_change + "-" + email_change)
+    )
+      .unwrap()
+      .then(() => {
+        setSuccessful(true);
+      })
+      .catch(() => {
+        setSuccessful(false);
+      });
+
+    /*
     fetch("http://127.0.0.1:5000/signup", {
       method: "POST",
       body: JSON.stringify({
@@ -37,27 +79,27 @@ const Auth = () => {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    });
+    */
   };
 
   const handleSignIn = (e) => {
     e.preventDefault();
 
-    fetch("http://127.0.0.1:5000/login", {
-      method: "POST",
-      body: JSON.stringify({
-        username: username_change,
-        password: password_change,
-      }),
+    setLoading(true);
 
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    if (true) {
+      dispatch(login(username_change + "-" + password_change))
+        .then((res) => {
+          console.log(res.payload.user.access_token);
+          navigate("/");
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
   };
 
   function handlePassword(event) {
@@ -95,27 +137,17 @@ const Auth = () => {
             Your number one news resource for all things tech, powered and
             update by Moringa School team
           </p>
+
           <button
             className="bg-default-gold text-default-green text-md font-semibold rounded-full w-40 py-1 mt-3"
             onClick={toggleForm}
           >
             {showLogin ? " Sign Up" : showRegister && "Sign In"}
           </button>
-          <div className="flex justify-between items-center mt-5">
-            <div className="text-start">
-              <h4 className="text-slate-300">
-                Contact <span className="text-default-gold">Us</span>
-              </h4>
-              <p className="text-gray-400 text-sm">+ (254) 712 345 678</p>
-            </div>
-            <div className="text-end">
-              <h4 className="text-slate-300">
-                <span className="text-default-gold">Follow</span> Us Now
-              </h4>
-              <p className="text-gray-400 text-sm">facebook/moringadaily</p>
-            </div>
-          </div>
+
+          <div className="flex justify-between items-center mt-5"></div>
         </div>
+
         {showLogin && (
           <form className="col-span-1 md:col-span-2 bg-white p-4">
             <h4 className="text-gray-500 uppercase py-1 text-center md:text-start text-sm">
@@ -129,14 +161,7 @@ const Auth = () => {
             <p className="text-xs text-slate-400 pr-6 text-center md:text-start">
               Sign in below if you have a registered account
             </p>
-            <div className="w-full border rounded-full flex justify-center py-1 gap-3 mt-3">
-              <KeyIcon className="w-1/5 text-slate-600 text-md" />
-              <input
-                type="text"
-                placeholder="Administrator"
-                className="w-3/5 focus:outline-none text-sm"
-              />
-            </div>
+
             <div className="w-full border rounded-full flex justify-center py-1 gap-3 mt-3">
               <PersonIcon className="w-1/5 text-slate-600 text-sm" />
               <input
@@ -146,13 +171,14 @@ const Auth = () => {
                 className="w-3/5 focus:outline-none text-sm"
               />
             </div>
+
             <div className="w-full border rounded-full flex justify-center py-1 gap-3 mt-3">
               <HttpsIcon className="w-1/5 text-slate-600 text-sm" />
               <input
                 type="password"
-                onChange={handlePassword}
                 placeholder="Password"
-                className="w-3/5 focus:outline-none text-sm"
+                onChange={handlePassword}
+                className="w-3/5 black focus:outline-none text-sm"
               />
             </div>
             <div className="flex justify-between items-center mt-3 gap-3">
@@ -162,14 +188,21 @@ const Auth = () => {
               </div>
               <h6 className="text-gray-400 text-xs">Forgot password?</h6>
             </div>
+                            <Link to="/">
+
             <div className="w-full flex justify-center">
               <button
                 className="bg-default-gold text-default-green text-md rounded-full w-full md:w-4/5 py-1 mt-3"
-                onClick={handleSignIn}
+                onClick={
+                  handleSignIn
+                }
               >
-                Sign In
+                          Sign In
+
               </button>
             </div>
+                                          </Link>
+
             <p className="mt-3 text-center text-gray-400 text-md md:text-xs">
               New here?{" "}
               <span
@@ -181,6 +214,7 @@ const Auth = () => {
             </p>
           </form>
         )}
+
         {showRegister && (
           <form className="col-span-1 md:col-span-2 bg-white p-4">
             <h4 className="text-gray-500 uppercase py-1 text-center md:text-start text-sm">
@@ -218,7 +252,7 @@ const Auth = () => {
               <input
                 type={`${showPass ? "text" : "password"}`}
                 placeholder="Password"
-                onChange={handleEmail}
+                onChange={handlePassword}
                 className="w-3/5 focus:outline-none text-sm"
               />
             </div>

@@ -10,22 +10,33 @@ import NewArticles from "../components/dashboard/NewArticles";
 import WishList from "../components/dashboard/WishList";
 import Footer from "../components/dashboard/Footer";
 
+import { jwtDecode } from "jwt-decode";
+
 const Dashboard = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  let user = JSON.parse(localStorage.getItem("user"));
+  user = jwtDecode(user.access_token).sub;
+
   return (
     <div>
-      <div className='flex h-screen overflow-hidden'>
+      <div className="flex h-screen overflow-hidden">
         <Sidebar isCollapsed={isCollapsed} />
-        <div className='flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
+        <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
           <TopBar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
           <main>
-            <div className='px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto'>
+            <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
               <ProfileSection />
               <CategorySection />
-              <UsersList />
-              <CreateCategory />
-              <CreatePost />
-              <NewArticles />
+              {user.role === "admin" ? <UsersList /> : null}
+              {user.role === "admin" || user.role === "writer" ? (
+                <CreateCategory />
+              ) : null}
+              {user.role === "admin" || user.role === "writer" ? (
+                <CreatePost />
+              ) : null}
+              {user.role === "admin" || user.role === "writer" ? (
+                <NewArticles />
+              ) : null}
               <WishList />
             </div>
           </main>
