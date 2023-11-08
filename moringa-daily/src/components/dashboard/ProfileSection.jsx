@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 const ProfileSection = () => {
   let user = JSON.parse(localStorage.getItem("user"));
   user = jwtDecode(user.access_token).sub;
+  console.log(user);
 
   return (
     <div className="w-full">
