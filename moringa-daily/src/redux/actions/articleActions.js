@@ -77,8 +77,8 @@ import {
         },
       };
   
-      const { data } = await axios.post(
-        `${BASE_URL}/content/delete-approved/${contentId}`,
+      const { data } = await axios.delete(
+        `${BASE_URL}/content/${contentId}`,
         config
       );
       dispatch(removeArticleSuccess(data));

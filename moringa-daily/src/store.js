@@ -5,7 +5,7 @@ import wishListReducer from "./redux/slices/wishlistSlices"
 import categoryReducer from "./redux/slices/categorySlices"
 import articleReducer from "./redux/slices/articleSlices"
 import commentReducer from "./redux/slices/commentSlice"
-
+import flaggedReducer from "./redux/slices/flaggedSlices"
 
 
 const rootReducer = combineReducers({
@@ -14,7 +14,8 @@ const rootReducer = combineReducers({
     wishlist:wishListReducer,
     category:categoryReducer,
     article:articleReducer,
-    comment:commentReducer
+    comment:commentReducer,
+    flagged: flaggedReducer,
 
 })
 const store = configureStore({

@@ -15,6 +15,10 @@ import {
   addItemToWishList,
   removeItemFromWishlist,
 } from "../redux/actions/wishlistActions";
+import {
+  addItemToFlagged,
+  removeItemFromFlagged,
+} from "../redux/actions/flaggedActions";
 import { Link } from "react-router-dom";
 
 const Article = () => {
@@ -97,6 +101,8 @@ const Article = () => {
   const wishlistName = "wishlist" + content_id;
   const flagName = "flag" + content_id;
 
+  console.log(controls[flagName])
+
   useEffect(() => {
     if (controls[removeName]) {
       dispatch(removeArticle(currentArticle?.content_id));
@@ -105,7 +111,14 @@ const Article = () => {
     } else if (!controls[wishlistName]) {
       dispatch(removeItemFromWishlist(currentArticle?.content_id));
     }
-  }, [controls, dispatch, currentArticle, removeName, wishlistName]);
+    if (controls[flagName]){
+      console.log("flagging...")
+      dispatch(addItemToFlagged(currentArticle?.content_id))
+    }else if (!controls[flagName]){
+      console.log("unflagging...")
+      dispatch(removeItemFromFlagged(currentArticle?.content_id));
+    }
+  }, [controls, dispatch, currentArticle, removeName, wishlistName, flagName]);
 
   useEffect(() => {
     if (success_remove) {
