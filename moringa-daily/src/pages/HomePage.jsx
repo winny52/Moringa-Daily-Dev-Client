@@ -1,14 +1,18 @@
 import React from "react";
-// import VideoCard from "../components/VideoCard";
-// import ArticleCard from "../components/ArticleCard";
 import Header from "../components/Header";
 import FeaturedView from "../components/FeaturedView";
 import NewPostSection from "../components/NewPostSection";
 import TrendingMedia from "../components/TrendingMedia";
 import VideoSlider from "../components/VideoSlider";
 import ArticlesSection from "../components/ArticlesSection";
+import Footer from "../components/Footer";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
+  const article = useSelector((state) => state.article);
+  
+  const { articles } = article;
+  console.log(articles);
   return (
     <>
       <Header />
@@ -16,7 +20,8 @@ const HomePage = () => {
       <NewPostSection />
       <TrendingMedia />
       <VideoSlider />
-      <ArticlesSection />
+      <ArticlesSection section_color='bg-white' articles={articles} />
+      <Footer />
     </>
   );
 };

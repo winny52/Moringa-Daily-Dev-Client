@@ -9,38 +9,30 @@ import CreatePost from "../components/dashboard/CreatePost";
 import NewArticles from "../components/dashboard/NewArticles";
 import WishList from "../components/dashboard/WishList";
 import Footer from "../components/dashboard/Footer";
-
-import { jwtDecode } from "jwt-decode";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  console.log(localStorage.getItem.user);
-  let user = JSON.parse(localStorage.getItem("user"));
-  user = jwtDecode(user.access_token).sub;
-  // console.log(jwtDecode(user));
-  
-
+  const [isCollapsed, setIsCollapsed] = useState(true);
   return (
     <div>
-      <div className="flex h-screen overflow-hidden">
+      <div className='flex h-screen overflow-hidden'>
         <Sidebar isCollapsed={isCollapsed} />
-        <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+        <div className='flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
           <TopBar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
           <main>
-            <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+            <Link
+              to='/'
+              className='w-full h-12 flex d-md-none items-center justify-end text-default-green uppercase text-xl px-3'
+            >
+              <h6 className='text-end underline italic'>Home</h6>
+            </Link>
+            <div className='px-1 md:px-12 md:py-4 w-full max-w-9xl mx-auto'>
               <ProfileSection />
               <CategorySection />
-              
-              {user.role === "admin" ? <UsersList /> : null}
-              {user.role === "admin" || user.role === "writer" ? (
-                <CreateCategory />
-              ) : null}
-              {user.role === "admin" || user.role === "writer" ? (
-                <CreatePost />
-              ) : null}
-              {user.role === "admin" || user.role === "writer" ? (
-                <NewArticles />
-              ) : null}
+              <UsersList />
+              <CreateCategory />
+              <CreatePost />
+              <NewArticles />
               <WishList />
             </div>
           </main>

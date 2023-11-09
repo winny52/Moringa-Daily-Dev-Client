@@ -3,7 +3,7 @@ import StarIcon from "@mui/icons-material/Star";
 
 const VideoCard = () => {
   return (
-    <div className='grid grid-cols-2 w-3/5 bg-white rounded'>
+    <div className='grid grid-cols-1 md:grid-cols-2 w-11/12 md:w-3/5 bg-white rounded'>
       <div className='col-span-1'>
         <iframe
           src='https://www.youtube.com/embed/-gsTLMgdEPQ?si=fH1GmMtBOPTf4zQ5'
@@ -11,7 +11,7 @@ const VideoCard = () => {
           frameborder='0'
           allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
           allowfullscreen
-          className='w-full h-full'
+          className='w-full h-full rounded'
         ></iframe>
       </div>
       <div className='col-span-1 py-4 px-4'>

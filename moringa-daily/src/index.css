@@ -1,56 +1,77 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-/* Your custom CSS styles go here */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-* {
+*{
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
-.text-default-green {
-  color: #013a2f;
+.card{
+  margin: 5px !important;
 }
 
-.text-default-gold {
-  color: #f1bb1b;
+.text-default-green{
+  color: #013A2F;
 }
 
-.bg-default-green {
-  background-color: #013a2f;
+.text-default-gold{
+  color: #F1BB1B;
 }
 
-.bg-default-gold {
-  background-color: #f1bb1b;
+.bg-default-green{
+  background-color: #013A2F;
 }
 
-.auth-screen {
+.bg-default-gold{
+  background-color: #F1BB1B;
+}
+
+.hide-header{
+  height: 0;
+  opacity: 0;
+}
+
+ .active-header {
+   position: fixed;
+   height: 60px;
+   top: 0;
+   right: 0;
+   left: 0;
+   z-index: 999;
+   opacity: 1;
+   transition: height 0.6s ease-out;
+  transition: opacity 0.6s ease-out;
+ }
+
+.auth-screen{
   height: calc(100vh - 56px);
 }
+
 
 .scrollbar-hide::-webkit-scrollbar {
   width: 0 !important;
 }
 
-.notification-badge {
+.notification-badge{
   top: -5px;
   right: -10px;
 }
 
 /* Radio buttons */
-.categories input[type="radio"]:checked {
-  border-color: #f1bb1b;
+input[type="radio"]:checked {
+  border-color: #F1BB1B;
   /* Change border color to blue when checked */
 }
 
-.categories input[type="radio"]:checked::before {
+input[type="radio"]:checked::before {
   content: "";
   /* This is used to create the dot inside the radio button */
   display: block;
   width: 0.75rem;
   height: 0.75rem;
-  background-color: #f1bb1b;
+  background-color: #F1BB1B;
   /* Color of the dot when radio input is checked */
   border-radius: 50%;
   position: relative;
@@ -60,11 +81,26 @@
 }
 
 .content-type input[type="radio"]:checked {
-  border-color: #f1bb1b;
+  border-color: #F1BB1B;
   /* Change border color to blue when checked */
 }
 
 .content-type input[type="radio"]:checked::before {
-  background-color: #f1bb1b;
+    background-color: #F1BB1B;
 }
 /* Radio buttons */
+/* Article Page */
+
+
+/* Article Page */
+
+
+@media (max-width: 768px){
+  .active-header{
+    height: 90px;
+  }
+
+  .auth-screen{
+    height: 100vh;
+  }
+}

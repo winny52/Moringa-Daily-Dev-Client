@@ -2,7 +2,7 @@ import React from "react";
 
 const NewPostSection = () => {
   return (
-    <div className='w-full h-14 bg-default-gold flex justify-center align-center'>
+    <div className='w-full h-16 px-4 md:h-14 bg-default-gold flex justify-center align-center'>
       <h3 className='text-default-green my-auto'>
         <span className='uppercase font-semibold'>NEW POSTS:</span> How
         Artificial Intelligence will impact the future workspace in tech
