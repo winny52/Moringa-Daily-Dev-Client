@@ -1,13 +1,70 @@
-body {
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+/* Your custom CSS styles go here */
+
+* {
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.text-default-green {
+  color: #013a2f;
 }
+
+.text-default-gold {
+  color: #f1bb1b;
+}
+
+.bg-default-green {
+  background-color: #013a2f;
+}
+
+.bg-default-gold {
+  background-color: #f1bb1b;
+}
+
+.auth-screen {
+  height: calc(100vh - 56px);
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+.notification-badge {
+  top: -5px;
+  right: -10px;
+}
+
+/* Radio buttons */
+.categories input[type="radio"]:checked {
+  border-color: #f1bb1b;
+  /* Change border color to blue when checked */
+}
+
+.categories input[type="radio"]:checked::before {
+  content: "";
+  /* This is used to create the dot inside the radio button */
+  display: block;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: #f1bb1b;
+  /* Color of the dot when radio input is checked */
+  border-radius: 50%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.content-type input[type="radio"]:checked {
+  border-color: #f1bb1b;
+  /* Change border color to blue when checked */
+}
+
+.content-type input[type="radio"]:checked::before {
+  background-color: #f1bb1b;
+}
+/* Radio buttons */
