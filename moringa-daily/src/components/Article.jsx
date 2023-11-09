@@ -10,7 +10,7 @@ import {
   rateArticle,
 } from "../redux/actions/commentActions";
 import { addArticleControls } from "../redux/slices/articleSlices";
-import { removeArticle } from "../redux/actions/articleActions";
+import { listArticles, removeArticle } from "../redux/actions/articleActions";
 import {
   addItemToWishList,
   removeItemFromWishlist,
@@ -30,7 +30,6 @@ const Article = () => {
   const article = useSelector((state) => state.article);
   const { articles, controls, success_remove } = article;
 
-  console.log('article',article)
   const currentArticle = articles?.find(
     (article) => article.content_id === articleId
   );
@@ -101,7 +100,6 @@ const Article = () => {
   const wishlistName = "wishlist" + content_id;
   const flagName = "flag" + content_id;
 
-  console.log(controls[flagName])
 
   useEffect(() => {
     if (controls[removeName]) {
@@ -134,6 +132,12 @@ const Article = () => {
     );
     setRelatedArticles(relatedArticles);
   }, [articles, currentArticle]);
+
+  useEffect(() => {
+   if (success_remove){
+     dispatch(listArticles())
+   }
+  }, [dispatch, success_remove])
 
   return (
     <section className='article-sect'>
