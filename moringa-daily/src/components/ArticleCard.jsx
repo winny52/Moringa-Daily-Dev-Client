@@ -2,10 +2,16 @@ import React from "react";
 import StarIcon from "@mui/icons-material/Star";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
-
+import {useDispatch} from "react-redux";
+import {removeItemFromWishlist} from "../redux/actions/wishlistActions"
 const ArticleCard = ({ article, is_new_article, is_wishlist }) => {
-  console.log('article',article)
   // const { title, description, content_id, media_url } = article;
+
+  const dispatch = useDispatch()
+
+  const handleRemoveFromWishlist = (id) => {
+    dispatch(removeItemFromWishlist(id))
+  }
   return (
     <div className='card  border'>
       <img
@@ -67,7 +73,7 @@ const ArticleCard = ({ article, is_new_article, is_wishlist }) => {
         )}
         {is_wishlist && (
           <div className='flex justify-between'>
-            <h6 className='text-red-400 uppercase my-auto text-sm cursor-pointer'>
+            <h6 className='text-red-400 uppercase my-auto text-sm cursor-pointer' onClick={() => handleRemoveFromWishlist(article.content_id)}>
               Remove from list
             </h6>
             <div className='flex text-default-gold justify-end'>
