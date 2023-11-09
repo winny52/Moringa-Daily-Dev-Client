@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import AuthPage from "./pages/AuthPage";
@@ -6,8 +6,14 @@ import HomePage from "./pages/HomePage";
 import ArticlePage from "./pages/ArticlePage";
 import Dashboard from "./pages/Dashboard"
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import { useDispatch } from "react-redux";
+import { listArticles } from "./redux/actions/articleActions";
 
 function App() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(listArticles())
+  },[dispatch])
   return (
     <Router>
       <Routes>

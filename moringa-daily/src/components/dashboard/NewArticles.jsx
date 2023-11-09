@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ArticleCard from "../ArticleCard";
+import { useDispatch, useSelector } from "react-redux";
+import { listArticles } from "../../redux/actions/articleActions";
+import { selectArticles } from "../../redux/slices/articleSlices";
 
-const NewArticles = () => {
+const NewArticles = ({articles}) => {
+
+  console.log('articles new',articles)
+
   return (
     <div className='text-white shadow-sm p-4 mx-2 mt-3'>
       <div className='flex items-center gap-3 my-3'>
@@ -9,15 +15,12 @@ const NewArticles = () => {
         <h6 className='text-red-500 my-auto'>Approve Flagged Articles</h6>
       </div>
       <div className='grid grid-cols-3 flex justify-center'>
+        {articles?.map((article) => (
+
         <div className='col-span-1 p-2'>
-          <ArticleCard is_flagged_article={true} />
+          <ArticleCard  article={article}   />
         </div>
-        <div className='col-span-1 p-2'>
-          <ArticleCard is_flagged_article={true} />
-        </div>
-        <div className='col-span-1 p-2'>
-          <ArticleCard is_flagged_article={true} />
-        </div>
+        ))}
       </div>
     </div>
   );

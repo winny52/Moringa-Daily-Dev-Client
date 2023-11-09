@@ -9,16 +9,16 @@ const UsersList = ({users}) => {
         <h6 className='text-red-400 my-auto'>List of all users and Roles</h6>
         
       </div>
-      <ListTable />
-      {/* <ul>
-        {users.map((user) => (
+      {/* <ListTable /> */}
+      <ul>
+        {users?.map((user) => (
           <li key={user.id}>
             <p>Name: {user.name}</p>
             <p>Email: {user.email}</p>
             <p>Role: {user.role}</p>
           </li>
         ))}
-      </ul> */}
+      </ul>
     </div>
   );
 };

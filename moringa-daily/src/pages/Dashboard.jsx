@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/dashboard/Sidebar";
 import TopBar from "../components/dashboard/TopBar";
 import ProfileSection from "../components/dashboard/ProfileSection";
@@ -10,13 +10,24 @@ import NewArticles from "../components/dashboard/NewArticles";
 import WishList from "../components/dashboard/WishList";
 import Footer from "../components/dashboard/Footer";
 
+
 import { jwtDecode } from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import { selectArticles } from "../redux/slices/articleSlices";
+import { listArticles } from "../redux/actions/articleActions";
 
 const Dashboard = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   let user = JSON.parse(localStorage.getItem("user"));
   user = jwtDecode(user.access_token).sub;
 
+  const articles = useSelector(selectArticles)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(listArticles())
+  },[dispatch])
+
+    console.log('articles dast',articles)
   return (
     <div>
       <div className="flex h-screen overflow-hidden">
@@ -35,7 +46,7 @@ const Dashboard = () => {
                 <CreatePost />
               ) : null}
               {user.role === "admin" || user.role === "writer" ? (
-                <NewArticles />
+                <NewArticles articles={articles} />
               ) : null}
               <WishList />
             </div>
