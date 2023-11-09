@@ -26,7 +26,7 @@ const CreatePost = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://127.0.0.1:5000//content", {
+      const response = await fetch("http://127.0.0.1:5000/content", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +47,7 @@ const CreatePost = () => {
     }
   };
   useEffect(() => {
-    fetch("http://127.0.0.1:5000//categories") 
+    fetch("http://127.0.0.1:5000/categories") 
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

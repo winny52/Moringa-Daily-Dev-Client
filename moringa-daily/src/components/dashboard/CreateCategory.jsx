@@ -17,7 +17,7 @@ const CreateCategory = () => {
       name: categoryName,
     };
 
-    fetch("/admin/create-category", {
+    fetch("http://127.0.0.1:5000/admin/create-category", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
