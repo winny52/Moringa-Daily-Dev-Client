@@ -13,8 +13,8 @@ import HttpsIcon from "@mui/icons-material/Https";
 import MailLockOutlinedIcon from "@mui/icons-material/MailLockOutlined";
 
 const Auth = () => {
-  const [showRegister, setShowRegister] = useState(true);
-  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+  const [showLogin, setShowLogin] = useState(true);
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -65,22 +65,6 @@ const Auth = () => {
       .catch(() => {
         setSuccessful(false);
       });
-
-    /*
-    fetch("http://127.0.0.1:5000/signup", {
-      method: "POST",
-      body: JSON.stringify({
-        username: username_change,
-        password: password_change,
-        email: email_change,
-        role: "user",
-      }),
-
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
-    */
   };
 
   const handleSignIn = (e) => {
@@ -116,6 +100,12 @@ const Auth = () => {
     const value = event.target.value;
     setEmail_change(value);
   }
+
+  useEffect(() => {
+    if (successful){
+      toggleForm()
+    }
+  }, [successful])
 
   return (
     <div

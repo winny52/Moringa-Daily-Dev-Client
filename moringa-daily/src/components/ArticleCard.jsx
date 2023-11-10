@@ -24,7 +24,7 @@ const ArticleCard = ({ article, is_new_article, is_wishlist }) => {
         alt='...'
       />
       <div className='card-body'>
-        <div className='flex justify-between text-slate-300 text-md'>
+        {/* <div className='flex justify-between text-slate-300 text-md'>
           <div className='flex gap-1 items-center'>
             <AccountCircleOutlinedIcon style={{ fontSize: "18px" }} />
             <h6 className='my-auto text-sm'>John Doe</h6>
@@ -37,7 +37,7 @@ const ArticleCard = ({ article, is_new_article, is_wishlist }) => {
             ></i>
             <h6 className='my-auto text-sm'>1st Nov 2023</h6>
           </div>
-        </div>
+        </div> */}
         <h5 className='text-default-green font-semibold py-2'>{article?.title}</h5>
         <p className='text-gray-600 text-sm'>{article?.description?.slice(0, 150)}...</p>
         <Link to={`/articles/${article?.content_id}`} className='py-3 text-default-gold'>
