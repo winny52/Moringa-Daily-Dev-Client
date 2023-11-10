@@ -139,7 +139,7 @@ const CreatePost = () => {
               ></textarea>
             </div>
           </div>
-          <div className="col-span-1 md:col-span-2 mx-8">
+          <div className="col-span-1 md:col-span-2 mx-8">/admin/create-category
             <div className="mb-3 content-type">
               <h6 className="text-default-gold py-2 text-md">Select Content Type</h6>
               <div className="flex gap-2 items-center ">

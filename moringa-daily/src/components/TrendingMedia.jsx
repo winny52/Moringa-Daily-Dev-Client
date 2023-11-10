@@ -7,7 +7,7 @@ const TrendingMedia = () => {
 
   // Create an Axios instance with the base URL of your local backend
   const api = axios.create({
-    baseURL: "http://127.0.0.1:5000",
+    baseURL: "https://moringaschool-daily.onrender.com",
   });
 
   useEffect(() => {

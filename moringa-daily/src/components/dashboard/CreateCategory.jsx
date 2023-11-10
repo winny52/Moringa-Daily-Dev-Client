@@ -17,7 +17,7 @@ const CreateCategory = () => {
       name: categoryName,
     };
 
-    fetch("/admin/create-category", {
+    fetch("https://moringaschool-daily.onrender.com", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
