@@ -11,7 +11,10 @@ import {
   registerSuccess,
   upgradeUserFail,
   upgradeUserStart,
-  upgradeUserSuccess
+  upgradeUserSuccess,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFail
 } from "../slices/userSlices";
 import axios from "axios";
 import { BASE_URL} from "../../URL";
@@ -48,7 +51,21 @@ export const upgradeUser = (id) => async (dispatch) => {
     dispatch(upgradeUserSuccess());
   } catch (err) {
     dispatch(
-      upgradeUserFail(err.response ? err.response.data.message : err.message)
+      upgradeUserFail("Error upgrading user...")
+    );
+  }
+};
+
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    dispatch(deleteUserStart());
+
+    await axios.delete(`${BASE_URL}/admin/delete-user/${id}`);
+
+    dispatch(deleteUserSuccess());
+  } catch (err) {
+    dispatch(
+      deleteUserFail("Error deleting user...")
     );
   }
 };
