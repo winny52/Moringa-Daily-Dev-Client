@@ -87,11 +87,11 @@ const rows = [
   },
 ];
 
-export default function ListTable() {
+export default function ListTable({users}) {
   return (
     <div>
       <DataGrid
-        rows={rows}
+        rows={users}
         columns={columns}
         initialState={{
           pagination: {

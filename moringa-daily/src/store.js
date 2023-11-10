@@ -6,6 +6,7 @@ import categoryReducer from "./redux/slices/categorySlices"
 import articleReducer from "./redux/slices/articleSlices"
 import commentReducer from "./redux/slices/commentSlice"
 import flaggedReducer from "./redux/slices/flaggedSlices"
+import userReducer  from "./redux/slices/userSlices"
 
 
 const rootReducer = combineReducers({
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     article:articleReducer,
     comment:commentReducer,
     flagged: flaggedReducer,
+    user: userReducer,
 
 })
 const store = configureStore({

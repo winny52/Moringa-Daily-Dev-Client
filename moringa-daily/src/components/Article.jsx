@@ -37,7 +37,7 @@ const Article = () => {
   const [comment, setComment] = useState("");
 
   const commentState = useSelector((state) => state.comment);
-  const { success_create, success_rating, comments, loading } = commentState;
+  const { success_create, success_rating, rating, comments, loading } = commentState;
 
   const [relatedArticles, setRelatedArticles] = useState([]);
 
@@ -95,6 +95,8 @@ const Article = () => {
       dispatch(getAverageRating(currentArticle.content_id));
     }
   }, [success_rating, currentArticle, dispatch]);
+
+  console.log(rating)
 
   const removeName = "remove" + content_id;
   const wishlistName = "wishlist" + content_id;
