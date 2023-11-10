@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import {useDispatch, useSelector} from "react-redux"
 import axios from 'axios';
+import {listCategories} from "../../redux/actions/categoryActions"
 
 const CategorySection = () => {
-  const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch()
+  const category = useSelector((state) => state.category);
+  const {categories} = category;
 
   useEffect(() => {
-    // Fetch categories from your Flask API
-    axios.get('http://localhost:5000/categories') // Replace with the correct API endpoint
-      .then((response) => {
-        setCategories(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching categories:', error);
-      });
-  }, []);
+    dispatch(listCategories())
+  }, [])
 
   return (
     <div className='bg-white p-4 shadow-sm mx-2 mt-4'>

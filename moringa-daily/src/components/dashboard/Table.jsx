@@ -1,66 +1,7 @@
-import * as React from "react";
+import React, {useEffect} from "react";
 import { DataGrid } from "@mui/x-data-grid";
-
-const columns = [
-  { field: "username", headerName: "Name", width: 100 },
-  { field: "email", headerName: "Email", width: 200 },
-  {
-    field: "role",
-    headerName: "Role",
-    type: "number",
-    width: 100,
-    renderCell: (params) => {
-      return (
-        <div>
-          {params.row.is_admin ? (
-            <h6 className='text-default-green'>Admin</h6>
-          ) : params.row.is_writer ? (
-            <h6 className='text-default-gold'>Writer</h6>
-          ) : (
-            <h6 className='text-red-400'>User</h6>
-          )}
-        </div>
-      );
-    },
-  },
-  {
-    field: "status",
-    headerName: "Status",
-    sortable: false,
-    width: 160,
-    renderCell: (params) => {
-      return (
-        <div>
-          {params.row.is_approved ? (
-            <div className='flex gap-1 items-center text-default-green'>
-              <i className='fa fa-check-circle-o' aria-hidden='true'></i>
-              <h6 className='my-auto'>Approved</h6>
-            </div>
-          ) : (
-            <div className='flex gap-1 items-center text-red-400'>
-              <i className='fa fa-pause aria-hidden'></i>
-              <h6 className='my-auto'>Waiting</h6>
-            </div>
-          )}
-        </div>
-      );
-    },
-  },
-  {
-    field: "action",
-    headerName: "Actions",
-    sortable: false,
-    width: 160,
-    renderCell: (params) => {
-      return (
-        <div className='flex gap-2 items-center text-red-500 cursor-pointer'>
-          <i class='fa fa-trash-o' aria-hidden='true'></i>
-          <h6 className='my-auto'>Delete</h6>
-        </div>
-      );
-    },
-  },
-];
+import { useSelector, useDispatch } from "react-redux";
+import { upgradeUser, listUsers, deleteUser } from "../../redux/actions/userActions";
 
 const rows = [
   {
@@ -87,15 +28,78 @@ const rows = [
   },
 ];
 
-export default function ListTable() {
+export default function ListTable({users}) {
+  const user = useSelector((state) => state.user);
+  const {loading, success_upgrade, success_delete} = user;
+
+  const dispatch = useDispatch()
+  const handleUpgrade = (id) => {
+    dispatch(upgradeUser(id))
+  }
+
+  const handleDeleteUser = (id) => {
+    dispatch(deleteUser(id))
+  }
+
+  const columns = [
+  { field: "username", headerName: "Name", width: 100 },
+  { field: "email", headerName: "Email", width: 200 },
+  {
+    field: "role",
+    headerName: "Role",
+    type: "number",
+    width: 200,
+    renderCell: (params) => {
+      return (
+        <div>
+          {params.row.role === "admin" &&
+            <h6 className='text-default-green'>Admin</h6>
+          }
+       {params.row.role === "writer" && (
+            <h6 className='text-default-gold'>Writer</h6>
+          ) }
+           {params.row.role === "user" && <h6 className='text-red-400'>User</h6> 
+          }
+        </div>
+      );
+    },
+  },
+  {
+    field: "action",
+    headerName: "Actions",
+    sortable: false,
+    width: 250,
+    renderCell: (params) => {
+      return (
+       <div className="flex gap-2 items-center">
+         <div className='flex gap-2 items-center text-green-500 cursor-pointer' onClick={() => handleUpgrade(params.row.id)}>
+          <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+          <h6 className='my-auto'>Upgrade</h6>
+        </div>
+         <div className='flex gap-2 items-center text-red-500 cursor-pointer' onClick={() => handleDeleteUser(params.row.id)}>
+          <i className='fa fa-trash-o' aria-hidden='true'></i>
+          <h6 className='my-auto'>Delete</h6>
+        </div>
+       </div>
+      );
+    },
+  },
+];
+
+useEffect(() => {
+  if (success_upgrade || success_delete){
+    dispatch(listUsers())
+  }
+}, [dispatch, success_upgrade, success_delete])
   return (
     <div>
+      {loading && <p>Loading upgrade...</p>}
       <DataGrid
-        rows={rows}
+        rows={users}
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 10 },
           },
         }}
         pageSizeOptions={[5, 10]}

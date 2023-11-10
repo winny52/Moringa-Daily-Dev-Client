@@ -10,11 +10,15 @@ import {
   rateArticle,
 } from "../redux/actions/commentActions";
 import { addArticleControls } from "../redux/slices/articleSlices";
-import { removeArticle } from "../redux/actions/articleActions";
+import { listArticles, removeArticle } from "../redux/actions/articleActions";
 import {
   addItemToWishList,
   removeItemFromWishlist,
 } from "../redux/actions/wishlistActions";
+import {
+  addItemToFlagged,
+  removeItemFromFlagged,
+} from "../redux/actions/flaggedActions";
 import { Link } from "react-router-dom";
 
 const Article = () => {
@@ -26,7 +30,6 @@ const Article = () => {
   const article = useSelector((state) => state.article);
   const { articles, controls, success_remove } = article;
 
-  console.log('article',article)
   const currentArticle = articles?.find(
     (article) => article.content_id === articleId
   );
@@ -34,7 +37,7 @@ const Article = () => {
   const [comment, setComment] = useState("");
 
   const commentState = useSelector((state) => state.comment);
-  const { success_create, success_rating, comments, loading } = commentState;
+  const { success_create, success_rating, rating, comments, loading } = commentState;
 
   const [relatedArticles, setRelatedArticles] = useState([]);
 
@@ -93,9 +96,12 @@ const Article = () => {
     }
   }, [success_rating, currentArticle, dispatch]);
 
+  console.log(rating)
+
   const removeName = "remove" + content_id;
   const wishlistName = "wishlist" + content_id;
   const flagName = "flag" + content_id;
+
 
   useEffect(() => {
     if (controls[removeName]) {
@@ -105,7 +111,14 @@ const Article = () => {
     } else if (!controls[wishlistName]) {
       dispatch(removeItemFromWishlist(currentArticle?.content_id));
     }
-  }, [controls, dispatch, currentArticle, removeName, wishlistName]);
+    if (controls[flagName]){
+      console.log("flagging...")
+      dispatch(addItemToFlagged(currentArticle?.content_id))
+    }else if (!controls[flagName]){
+      console.log("unflagging...")
+      dispatch(removeItemFromFlagged(currentArticle?.content_id));
+    }
+  }, [controls, dispatch, currentArticle, removeName, wishlistName, flagName]);
 
   useEffect(() => {
     if (success_remove) {
@@ -121,6 +134,12 @@ const Article = () => {
     );
     setRelatedArticles(relatedArticles);
   }, [articles, currentArticle]);
+
+  useEffect(() => {
+   if (success_remove){
+     dispatch(listArticles())
+   }
+  }, [dispatch, success_remove])
 
   return (
     <section className='article-sect'>

@@ -1,6 +1,25 @@
 import React, { useState, useEffect } from "react";
+import {useDispatch, useSelector} from "react-redux"
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import app from "../../firebase"
+import {createArticle, listArticles} from "../../redux/actions/articleActions"
 
 const CreatePost = () => {
+  const bucket_url = "gs://moringadailydev.appspot.com/";
+
+  const dispatch = useDispatch()
+  const category = useSelector((state) => state.category);
+  const {categories} = category;
+
+
+  const article = useSelector((state) => state.article);
+  const {loading, success_create} = article;
+
   const [formData, setFormData] = useState({
     title: "",
     category: "",
@@ -9,8 +28,6 @@ const CreatePost = () => {
     image: null,
     media_url: "",
   });
-
-  const [categories, setCategories] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -22,51 +39,62 @@ const CreatePost = () => {
     });
   };
 
+  const [file, setFile] = useState("")
+  const [fileUrl, setFileUrl] = useState("")
+  const [progress, setProgress] = useState(0);
+  const [imageUploaded, setImageUploaded] = useState(false);
+
+  const uploadImage = () => {
+    setImageUploaded(false);
+      const fileName = new Date().getTime() + file.name;
+      const storage = getStorage(app, bucket_url);
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          //console.log(error);
+        },
+        async () => {
+          await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setFileUrl(downloadURL);
+            setImageUploaded(true);
+          });
+        }
+      );
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch("http://127.0.0.1:5000//content", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.status === 201) {
-        // Content posted successfully
-        alert("Content posted");
-      } else {
-        // Content not posted
-        alert("Content not posted");
-      }
-    } catch (error) {
-      // Handle any network or other errors
-      console.error("Error:", error);
+    uploadImage()
+    if (fileUrl !== ""){
+      console.log("posting content...")
+      dispatch(createArticle({...formData, media_url: fileUrl}))
     }
   };
+
+
   useEffect(() => {
-    fetch("http://127.0.0.1:5000//categories") 
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching categories:", error);
-      });
-  }, []);
+    if (success_create){
+      setFormData(
+        {
+        title: "", category: "", description: "", content_type: "Article", image: null, media_url: "",})
+      dispatch(listArticles())
+    }
+  }, [dispatch,  success_create])
   return (
     <form onSubmit={handleSubmit}>
       <div className="bg-white p-4 shadow-sm mx-2 mt-4">
         <div className="flex items-center gap-3 mt-3">
           <div className="w-4 h-4 rounded-full bg-red-900 flex justify-center items-center"></div>
           <h6 className="text-red-900 my-auto text-xl">Post Content</h6>
+          {loading && <p>Loading...</p>}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-5">
           <div className="col-span-1 md:col-span-3">
@@ -150,7 +178,7 @@ const CreatePost = () => {
               <input
                 type="file"
                 name="image"
-                onChange={handleInputChange}
+                onChange={(e) => setFile(e.target.files[0])}
                 className="rounded py-1"
               />
             </div>
@@ -159,10 +187,10 @@ const CreatePost = () => {
               <input
                 type="text"
                 name="media_url"
-                value={formData.media_url}
+                value={fileUrl}
                 onChange={handleInputChange}
                 className="w-full py-1 border focus:outline-none rounded-lg px-2 text-gray-600"
-                placeholder=" *For Audio and video files"
+                placeholder="please don't typ"
               />
             </div>
             <button
@@ -177,6 +205,6 @@ const CreatePost = () => {
       </div>
     </form>
   );
-};
+}
 
 export default CreatePost;

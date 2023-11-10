@@ -27,6 +27,9 @@ const Header = () => {
   const [, forceUpdate] = useReducer(x => x + 1, 0);
   const dispatch = useDispatch();
 
+  const wishlist = useSelector((state) => state.wishlist);
+  const {wishlistItems} = wishlist;
+
   const alogout = () => {
     localStorage.removeItem("user");
   };
@@ -68,7 +71,14 @@ const Header = () => {
           </li>
           
           <li className="flex gap-1 items-center">
+            <div className='w-8 h-8 rounded-full flex items-center justify-center bg-slate-200 relative'>
             <StarIcon style={{ fontSize: "22px" }} />
+            {wishlistItems.length > 0 && (
+              <span className='absolute top-0 right-0 w-4 h-4 rounded-full flex items-center justify-center bg-red-500 text-white text-sm'>
+                {wishlistItems.length}
+              </span>
+            )}
+          </div>
             <h6 className="my-auto text-sm font-semibold">Wishlist</h6>
           </li>
 
